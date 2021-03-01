@@ -10,9 +10,10 @@ Description:
 	Testing
 __________________________________________________*/
 
-private ['_blackListedAreas','_roadLoc'];
+private ['_blackListedAreas','debug','_roadLoc'];
 
 _blackListedAreas = [];
+_debug = true;
 
 _randomPos = [nil, _blackListedAreas] call BIS_fnc_randomPos;
 _roadLoc = [_randomPos, 500] call BIS_fnc_nearestRoad;
@@ -39,3 +40,9 @@ if (!(isOnRoad _veh2_safePos)) then {
 	};
 };
 _veh2 = createVehicle [_vehType,_veh2_safePos,[],0,'NONE'];
+
+// Debug Marker
+if (_debug) then {
+	_dbMarker = createMarker ["Debug Convoy", _POI_safePos];
+	_dbMarker = setMarkerType "hd_dot";
+};
