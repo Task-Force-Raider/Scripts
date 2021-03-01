@@ -14,23 +14,21 @@ private ['_randomPos', '_blackListedAreas','_debug','_roadLoc', '_connectedRoad'
 
 _blackListedAreas = [];
 _debug = true;
-_roads = false;
 
 for '_i' from 0 to 1 do {
 	_randomPos = [nil, _blackListedAreas] call BIS_fnc_randomPos;
-
 	_roadLoc = [_randomPos, 500] call BIS_fnc_nearestRoad;
-
-	hint format ["%1", _roadLoc];
-	_roadConnectedTo = roadsConnectedTo _roadLoc;
-	_connectedRoad = _roadConnectedTo select 0;
-	_RoadDir = [_roadLoc,_connectedRoad] call BIS_fnc_dirTo;
 	if (isOnRoad _roadLoc) exitWith {};
 };
-hint "exited";
+
+_roadConnectedTo = roadsConnectedTo _roadLoc;
+_connectedRoad = _roadConnectedTo select 0;
+_RoadDir = [_roadLoc,_connectedRoad] call BIS_fnc_dirTo;
+hint format ["%1, %2", _roadLoc, _RoadDir];
+
 _vehType = selectRandom BB_ArmedVehicles;
 _veh1 = createVehicle [_veh1Type,_roadLoc,[],0,'NONE'];
-_veh1 setDir _BB_connectedRoadDir;
+_veh1 setDir RoadDir;
 _POI_safePos = getPosATL _veh1;
 _veh1 lock 2;
 _veh1 setfuel 0;
