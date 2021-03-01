@@ -10,19 +10,24 @@ Description:
 	Testing
 __________________________________________________*/
 
-private ['_blackListedAreas','debug','_roadLoc'];
+private ['_randomPos', '_blackListedAreas','_debug','_roadLoc', '_connectedRoad'];
 
 _blackListedAreas = [];
 _debug = true;
+_roads = false;
 
-_randomPos = [nil, _blackListedAreas] call BIS_fnc_randomPos;
-_roadLoc = [_randomPos, 500] call BIS_fnc_nearestRoad;
+for '_i' from 0 to 1 do {
+	_randomPos = [nil, _blackListedAreas] call BIS_fnc_randomPos;
 
-_roadConnectedTo = roadsConnectedTo _roadLoc;
-_connectedRoad = _roadConnectedTo select 0;
-_RoadDir = [_nearestRoadPos,_connectedRoad] call BIS_fnc_dirTo;
+	_roadLoc = [_randomPos, 500] call BIS_fnc_nearestRoad;
 
-
+	hint format ["%1", _roadLoc];
+	_roadConnectedTo = roadsConnectedTo _roadLoc;
+	_connectedRoad = _roadConnectedTo select 0;
+	_RoadDir = [_roadLoc,_connectedRoad] call BIS_fnc_dirTo;
+	if (isOnRoad _roadLoc) exitWith {};
+};
+hint "exited";
 _vehType = selectRandom BB_ArmedVehicles;
 _veh1 = createVehicle [_veh1Type,_roadLoc,[],0,'NONE'];
 _veh1 setDir _BB_connectedRoadDir;
@@ -39,10 +44,10 @@ if (!(isOnRoad _veh2_safePos)) then {
 		};
 	};
 };
-_veh2 = createVehicle [_vehType,_veh2_safePos,[],0,'NONE'];
+_veh2 = createVehicle [_vehType,_veh2_safePos,[],0,'NONE'];*/
 
 // Debug Marker
 if (_debug) then {
-	_dbMarker = createMarker ["Debug Convoy", _POI_safePos];
-	_dbMarker = setMarkerType "hd_dot";
+	_dbMarker = createMarker ["Debug Marker", _roadLoc];
+	_dbMarker setMarkerType "hd_dot";
 };
