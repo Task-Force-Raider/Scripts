@@ -1,5 +1,5 @@
 /*
-File: config.hpp
+File: params.sqf
 Author:
 
 	BroBeans
@@ -12,6 +12,6 @@ Description:
 */
 
 //friendly Armed vehicles array
-BB_ArmedVehicles[] = {"veh1", "veh2"};
+BB_ArmedVehicles = ["veh1", "veh2"];
 
-BB_UnarmedVehicles[] = {};
+BB_UnarmedVehicles = [];
